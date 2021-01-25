@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UpdateActivity">
+
+    <EditText
+        android:id="@+id/etFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="First name"
+        android:layout_margin="15dp"
+        />
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Age"
+        android:layout_margin="15dp"
+        />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_below="@id/etPassword"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:text="Update"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mybutton"
+        />
+
+
+</LinearLayout>
