@@ -8,13 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.santoo.homedatabaseproject.R
 import com.santoo.homedatabaseproject.UpdateActivity
 import com.santoo.homedatabaseproject.database.userDB
 import com.santoo.homedatabaseproject.entity.Student
-import com.santoo.homedatabaseproject.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,12 +25,12 @@ class StudentAdapter(
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val btnDelete: ImageButton
-        val btnEdit : ImageButton
+        val btnUpdate : ImageButton
         val tvName: TextView
         val tvAge: TextView
 
         init {
-            btnEdit = view.findViewById(R.id.btnEdit)
+            btnUpdate = view.findViewById(R.id.btnUpdate)
             btnDelete = view.findViewById(R.id.btnDelete)
             tvName = view.findViewById(R.id.tvName)
             tvAge = view.findViewById(R.id.tvAge)
@@ -69,11 +67,11 @@ class StudentAdapter(
             alertDialog.show()
         }
 
-        holder.btnEdit.setOnClickListener{
+        holder.btnUpdate.setOnClickListener{
 
-            
-
-
+            val intent = Intent(context, UpdateActivity::class.java)
+            intent.putExtra("student",student)
+            context.startActivity(intent)
 
         }
 //        Glide.with(context)
@@ -82,19 +80,12 @@ class StudentAdapter(
     }
 
     private fun deleteStudent(student: Student) {
-        CoroutineScope(Dispatchers.IO).launch { userDB.getInstance(context).getStudentDAO().DeleteStudent(student)
+        CoroutineScope(Dispatchers.IO).launch { userDB.getInstance(context).getStudentDAO().deleteStudent(student)
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
             }
         }
 
-    }
-
-    private fun startIntent( name: String?, age: String?) {
-        val intent = Intent(context, UpdateActivity::class.java)
-        intent.putExtra("name", name)
-        intent.putExtra("age", age)
-        context.startActivity(intent)
     }
 
 

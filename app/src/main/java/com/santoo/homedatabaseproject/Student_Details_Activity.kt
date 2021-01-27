@@ -3,11 +3,13 @@ package com.santoo.homedatabaseproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
+import com.santoo.homedatabaseproject.database.userDB
+import com.santoo.homedatabaseproject.entity.Student
 import com.santoo.homedatabaseproject.entity.User
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
+import java.lang.Exception
 
 class Student_Details_Activity : AppCompatActivity() {
 
@@ -19,8 +21,6 @@ class Student_Details_Activity : AppCompatActivity() {
     private lateinit var others : RadioButton
     private lateinit var etAddress : EditText
     private lateinit var btnAdd : Button
-    private var lstStudent = ArrayList<User>()
-    var count : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,24 +37,41 @@ class Student_Details_Activity : AppCompatActivity() {
 
         btnAdd.setOnClickListener {
 
-            if(count <= 2){
-                val firstName = etFirst.text.toString()
-                val age = etSecond.text.toString()
+            var fullName = etFirst.text.toString()
+            var age = etSecond.text.toString().toInt()
+            var address = etAddress.text.toString()
+            var gender = ""
 
-                val student = User(firstName, age)
-                lstStudent.add(student)
+            when {
+                male.isSelected -> {
+                    gender = "male"
+                }
+
+                female.isSelected -> {
+                    gender = "female"
+                }
+
+                others.isSelected -> {
+                    gender = "others"
+                }
 
             }
-            if(count == 2)
-            {
-                val intent = Intent(this, ChooseActivity::class.java)
-                intent.putExtra("students", lstStudent)
-                startActivity(intent)
+            var student = Student(fullName, age, gender, address)
+
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+
+                    userDB.getInstance(this@Student_Details_Activity).getStudentDAO().insertStudent(student)
+                    withContext(Main)
+                    {
+                        Toast.makeText(this@Student_Details_Activity, "Student Added", Toast.LENGTH_LONG).show()
+                    }
+
+                }
             }
-
-            count++
-
-
+            catch (ex: Exception) {
+                Toast.makeText(this, "Error ${ex.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
 
 
         }

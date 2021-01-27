@@ -10,7 +10,6 @@ class ChooseActivity : AppCompatActivity() {
 
     private lateinit var addStudent : Button
     private lateinit var viewStudent : Button
-    private var lstStudent = ArrayList<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +24,9 @@ class ChooseActivity : AppCompatActivity() {
 
         }
         viewStudent.setOnClickListener {
+
+            val intent = Intent(this, View_Details_Activity::class.java)
+            startActivity(intent)
 
         }
     }

@@ -47,7 +47,7 @@ class SignUp_Activity : AppCompatActivity() {
                 val user = User(fname, lname, username, password)
                 CoroutineScope(Dispatchers.IO).launch {
                     userDB
-                        .getInstance(this@SignUp_Activity)
+                        .getInstance(this@SignUp_Activity)     //userdb ko instance dincha
                         .getUserDAO()
                         .registerUser(user)
                     //Switiching thread to Main thread

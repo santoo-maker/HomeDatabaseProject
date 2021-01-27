@@ -1,28 +1,26 @@
 package com.santoo.homedatabaseproject.entity
 
-
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 @Entity
-data class Student(
-        var fullName: String? = null,
-        var age: Int? = null,
-        var gender: String? = null,
-        var address: String? = null
-) : Parcelable{
+ data class Student (
+         var fullName : String? = null,
+         var age : Int? = null,
+         var gender : String? = null,
+         var address : String? = null
+         ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
-    var stdId: Int = 0
+    var stdId : Int = 0
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readString(),
-            parcel.readString()
-    ) {
+            parcel.readString()) {
+
         stdId = parcel.readInt()
     }
 
@@ -47,6 +45,5 @@ data class Student(
             return arrayOfNulls(size)
         }
     }
-
 
 }
